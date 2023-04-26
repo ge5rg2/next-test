@@ -7,10 +7,6 @@ export default async function List() {
   const db = client.db("forum");
   let result = await db.collection("post").find().toArray();
 
-  const onOpenList = async () => {
-    console.log("test");
-  };
-
   return (
     <div className="list-bg">
       {result.map((el) => {
