@@ -4,9 +4,10 @@ import Link from "next/link";
 
 export default function ListItem({ result }) {
   const onDeleteClick = (uid) => {
-    fetch("/api/post/delete", { method: "DELETE", body: uid })
-      .then((r) => {
-        if (r.status == 200) {
+    fetch(`/api/delete/${uid}`)
+      .then((r) => r.json())
+      .then((result) => {
+        if (result.deletedCount === 1) {
           return window.location.reload();
         } else {
           //서버가 에러코드전송시 실행할코드
@@ -32,10 +33,27 @@ export default function ListItem({ result }) {
               <h4>✍️</h4>
             </Link>
             <button
-              onClick={() => onDeleteClick(el._id)}
-              style={{ background: "none" }}
+              className="list-btn"
+              onClick={(e) => {
+                fetch(`/api/post/delete?uid=${el._id}`, {
+                  method: "GET",
+                }).then(() => {
+                  e.target.parentElement.style.opacity = 0;
+                  setTimeout(() => {
+                    e.target.parentElement.style.display = "none";
+                  }, 1000);
+                });
+              }}
             >
               🗑️
+            </button>
+            <button
+              className="list-btn"
+              onClick={() => {
+                onDeleteClick(el._id);
+              }}
+            >
+              🚮
             </button>
             <p>{el.content}</p>
           </div>
@@ -54,5 +72,10 @@ onDeleteClick(el._id)를 onClick 이벤트 핸들러에 전달하면서 함수�
 따라서 모든 ListItem이 렌더링될 때마다 해당 함수가 즉시 실행됩니다.
 
 이를 해결하기 위해서는 onClick 이벤트 핸들러에 함수를 전달하는 방법으로 수정해야 합니다. 
-즉, onDeleteClick(el._id) 대신에 () => onDeleteClick(el._id)를 전달해야 합니다. 
+즉, onDeleteClick(el._id) 대신에 () => onDeleteClick(el._id)를 전달해야 합니다.
+
+/어쩌구?a=1&b=2&c=3 
+이렇게 URL을 작성하면 서버로 {a:1, b:2, c:3} 이런 데이터가 전송됩니다.
+
+물음표 뒤에 오는 것들을 query string이라고 부릅니다. 
  */

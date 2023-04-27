@@ -6,11 +6,11 @@ export default async function handler(req, res) {
     return res.status(400).json("Not the right approach");
   } else {
     try {
-      const { uid } = req.query;
+      const { num } = req.query;
       const db = (await connectDB).db("forum");
       const result = await db
         .collection("post")
-        .deleteOne({ _id: new ObjectId(uid) });
+        .deleteOne({ _id: new ObjectId(num) });
 
       console.log(result);
       return res.status(200).send(result);
