@@ -6,6 +6,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className="navbar">
+          <Link href="/" className="logo">
+            Appleforum
+          </Link>
           <Link href="/write">Write</Link>
           <Link href="/list">List</Link>
           <Link href="/signin">SignIn</Link>

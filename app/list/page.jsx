@@ -12,8 +12,11 @@ export default async function List() {
       {result.map((el) => {
         return (
           <div className="list-item" key={el._id}>
-            <Link href={`/detail/${el._id}`}>
+            <Link style={{ textDecoration: "none" }} href={`/detail/${el._id}`}>
               <h4>{el.title}</h4>
+            </Link>
+            <Link style={{ textDecoration: "none" }} href={`/edit/${el._id}`}>
+              <h4>✍️</h4>
             </Link>
             <p>{el.content}</p>
           </div>
