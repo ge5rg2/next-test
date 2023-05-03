@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function ListItem({ result }) {
   const onDeleteClick = (uid) => {
-    fetch(`/api/delete/${uid}`)
+    fetch(`/api/delete/${uid}`, { method: "POST" })
       .then((r) => r.json())
       .then((result) => {
         if (result.deletedCount === 1) {
@@ -21,6 +21,7 @@ export default function ListItem({ result }) {
         console.log(error);
       });
   };
+
   return (
     <div>
       {result.map((el) => {

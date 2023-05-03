@@ -1,8 +1,16 @@
 import { connectDB } from "util/database";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
 
 const handler = async (req, res) => {
   if (req.method == "POST") {
-    const { title, content } = req.body;
+    let session = await getServerSession(req, res, authOptions);
+    if (session) {
+      req.body.author = session.user.email;
+    } else {
+      return res.status(400).json("Available after signing in.");
+    }
+    const { title, content, author } = req.body;
     if (title == "" || content == "") {
       return res.status(200).redirect(302, "/write");
     }
@@ -10,14 +18,18 @@ const handler = async (req, res) => {
     const result = await db.collection("post").insertOne({
       title,
       content,
+      author,
     });
     console.log(
       "The user has entered information ->" +
-        "title" +
+        "title " +
         title +
         " " +
-        "content" +
-        content
+        "content " +
+        content +
+        " " +
+        "author " +
+        author
     );
     return res.status(200).redirect(302, "/list");
   } else {
