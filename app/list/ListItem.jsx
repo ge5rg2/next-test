@@ -48,14 +48,7 @@ export default function ListItem({ result }) {
             >
               🗑️
             </button>
-            <button
-              className="list-btn"
-              onClick={() => {
-                onDeleteClick(el._id);
-              }}
-            >
-              🚮
-            </button>
+
             <p>{el.content}</p>
           </div>
         );
