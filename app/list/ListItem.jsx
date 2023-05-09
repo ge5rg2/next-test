@@ -4,13 +4,14 @@ import Link from "next/link";
 
 export default function ListItem({ result }) {
   const onDeleteClick = (uid) => {
-    fetch(`/api/delete/${uid}`, { method: "POST" })
+    fetch(`/api/post/delete?uid=${uid}`, { method: "POST" })
       .then((r) => r.json())
       .then((result) => {
         if (result.deletedCount === 1) {
           return window.location.reload();
         } else {
           //서버가 에러코드전송시 실행할코드
+          alert(result);
         }
       })
       .then((result) => {
@@ -35,15 +36,8 @@ export default function ListItem({ result }) {
             </Link>
             <button
               className="list-btn"
-              onClick={(e) => {
-                fetch(`/api/post/delete?uid=${el._id}`, {
-                  method: "GET",
-                }).then(() => {
-                  e.target.parentElement.style.opacity = 0;
-                  setTimeout(() => {
-                    e.target.parentElement.style.display = "none";
-                  }, 1000);
-                });
+              onClick={() => {
+                onDeleteClick(el._id);
               }}
             >
               🗑️

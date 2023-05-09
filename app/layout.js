@@ -18,10 +18,13 @@ export default async function RootLayout({ children }) {
           <Link href="/" className="logo">
             Appleforum
           </Link>
-          <Link href="/write">Write</Link>
+
+          {session ? (
+            <Link href="/write">Write</Link>
+          ) : (
+            <Link href="/register">Register</Link>
+          )}
           <Link href="/list">List</Link>
-          <Link href="/signin">SignIn</Link>
-          <Link href="/register">Register</Link>
           {session ? <LogoutBtn userName={name} /> : <LoginBtn />}
         </div>
         {children}

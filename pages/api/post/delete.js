@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
-  if (req.method !== "GET") {
+  if (req.method !== "POST") {
     return res.status(400).json("Not the right approach");
   } else {
     let session = await getServerSession(req, res, authOptions);
@@ -16,14 +16,18 @@ export default async function handler(req, res) {
         const dbmore = await db
           .collection("post")
           .findOne({ _id: new ObjectId(uid) });
-        console.log(dbmore);
-        if (dbmore.author == session.user.email) {
+        if (session.user.role == "admin") {
           const result = await db
             .collection("post")
             .deleteOne({ _id: new ObjectId(uid) });
           return res.status(200).send(result);
+        } else if (dbmore.author !== session.user.email) {
+          res.status(400).json("Not the right approach");
         } else {
-          return res.status(400).json("Not the right approach");
+          const result = await db
+            .collection("post")
+            .deleteOne({ _id: new ObjectId(uid) });
+          return res.status(200).send(result);
         }
       } catch (error) {
         return res.status(500);
