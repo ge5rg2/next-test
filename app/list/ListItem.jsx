@@ -32,7 +32,7 @@ export default function ListItem({ result }) {
               <h4>{el.title}</h4>
             </Link>
             <Link style={{ textDecoration: "none" }} href={`/edit/${el._id}`}>
-              <h4>✍️</h4>
+              <div>✍️</div>
             </Link>
             <button
               className="list-btn"

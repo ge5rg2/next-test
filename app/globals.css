@@ -51,3 +51,8 @@ button {
   border: none;
   border-radius: 5px;
 }
+.commentData_Box {
+  margin: 1rem 0;
+  width: 20rem;
+  border: 1px solid black;
+}
