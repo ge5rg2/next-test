@@ -1,9 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Comment({ parentData }) {
   let [comment, setComment] = useState("");
+
+  // client side에서 server 의 data를 가져오고 싶다면 다음과 같이 useEffect에서 ajax
+  useEffect(() => {
+    fetch();
+  }, []);
+
   return (
     <div id="comment">
       <div>Comment List</div>

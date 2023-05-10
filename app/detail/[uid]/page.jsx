@@ -12,14 +12,6 @@ export default async function Detail(props) {
   let result = await db
     .collection("post")
     .findOne({ _id: new ObjectId(props.params.uid) });
-  // find 로 불러온 데이터는 toArray 를 사용해야 배열형태로 볼 수 있다.
-  let commentData = await db
-    .collection("comment")
-    .find({
-      parent: new ObjectId(props.params.uid),
-    })
-    .toArray();
-  console.log(commentData);
 
   return (
     <div>
@@ -27,9 +19,7 @@ export default async function Detail(props) {
       <h4>2</h4>
       <p>1</p>
       <Comment parentData={props} />
-      <div className="commentData_Box">
-        <h4>ss</h4>
-      </div>
+      <div></div>
     </div>
   );
 }
