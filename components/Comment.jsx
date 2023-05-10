@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 
 export default function Comment({ parentData }) {
   let [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
 
   // client side에서 server 의 data를 가져오고 싶다면 다음과 같이 useEffect에서 ajax
   useEffect(() => {
-    fetch();
+    fetch(`/api/comments?uid=${parentData.params.uid}`)
+      .then((r) => r.json())
+      .then((result) => setComments([result, ...comment]));
   }, []);
 
   return (
@@ -44,6 +47,9 @@ export default function Comment({ parentData }) {
       >
         Forwarding comments
       </button>
+      {comments.map((el, index) => {
+        <div key={index}>{el.comment}</div>;
+      })}
     </div>
   );
 }
