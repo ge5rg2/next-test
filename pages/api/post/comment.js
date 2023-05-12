@@ -30,22 +30,36 @@ export default async function handler(req, res) {
       }
     }
   } else if (req.method == "PUT") {
-    const { _id } = req.body;
+    const { id, parent } = req.body;
     const { email } = session.user;
     const db = (await connectDB).db("forum");
     const result = await db
       .collection("comment")
-      .findOne({ _id: new ObjectId(_id) });
+      .findOne({ _id: new ObjectId(id) });
     if (result) {
-      if (email == result.email) {
+      if (result.like.includes(email)) {
         return res.status(400).json("You already liked this comment");
       } else {
+        const updatedResult = await db
+          .collection("comment")
+          .findOneAndUpdate(
+            { _id: new ObjectId(id) },
+            { $push: { like: email } },
+            { returnOriginal: false }
+          );
+
+        if (updatedResult.value) {
+          const updatedComment = await db
+            .collection("comment")
+            .find({ parent: new ObjectId(parent) })
+            .toArray();
+          return res.status(200).json(updatedComment);
+        }
       }
     }
-    return;
   } else {
     return res.status(400).json("This is an incorrect approach.");
   }
 }
 
-// PUT 일 경우 추가
+// 500 에러 처리 필요ㅕ

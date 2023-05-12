@@ -30,25 +30,29 @@ export default function Comment({ parentData }) {
   };
 
   const onLikeClick = async (id) => {
-    console.log(id);
     fetch("/api/post/comment", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        _id: id,
+        id,
+        parent: parentData.params.uid,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 400) {
+          throw new Error("You already liked this comment");
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log(data);
         setComments(data);
         setComment("");
       })
       .catch((error) => {
-        console.error(error);
-        // 실패시 실행할 코드
+        alert(error.message);
       });
   };
 
@@ -88,7 +92,7 @@ export default function Comment({ parentData }) {
                   >
                     ♥️
                   </button>
-                  <span>s</span>
+                  <span>{el.like.length}</span>
                 </div>
               </div>
             ))

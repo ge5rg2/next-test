@@ -25,7 +25,13 @@ export default async function RootLayout({ children }) {
             <Link href="/register">Register</Link>
           )}
           <Link href="/list">List</Link>
-          {session ? <LogoutBtn userName={name} /> : <LoginBtn />}
+          {session ? (
+            <Link href="/">
+              <LogoutBtn userName={name} />
+            </Link>
+          ) : (
+            <LoginBtn />
+          )}
         </div>
         {children}
       </body>
