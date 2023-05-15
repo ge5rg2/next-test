@@ -13,6 +13,7 @@ export default async function Detail(props) {
     .collection("post")
     .findOne({ _id: new ObjectId(props.params.uid) });
 
+  // 게시물 좋아요 기능 추가해보기
   return (
     <div>
       <h4>{result.title}</h4>

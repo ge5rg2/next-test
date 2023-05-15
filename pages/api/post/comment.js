@@ -20,7 +20,7 @@ export default async function handler(req, res) {
           parent: new ObjectId(parent),
           email,
           name,
-          like: [email],
+          like: [],
         });
         let resultComment = await db
           .collection("comment")

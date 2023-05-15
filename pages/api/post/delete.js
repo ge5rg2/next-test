@@ -20,6 +20,11 @@ export default async function handler(req, res) {
           const result = await db
             .collection("post")
             .deleteOne({ _id: new ObjectId(uid) });
+          // 관련 comments 역시 삭제
+          const deleteComment = await db
+            .collection("comment")
+            .deleteMany({ parent: new ObjectId(uid) });
+          console.log(deleteComment);
           return res.status(200).send(result);
         } else if (dbmore.author !== session.user.email) {
           res.status(400).json("Not the right approach");
@@ -27,6 +32,11 @@ export default async function handler(req, res) {
           const result = await db
             .collection("post")
             .deleteOne({ _id: new ObjectId(uid) });
+          // 관련 comments 역시 삭제
+          const deleteComment = await db
+            .collection("comment")
+            .deleteMany({ parent: new ObjectId(uid) });
+          console.log(deleteComment);
           return res.status(200).send(result);
         }
       } catch (error) {

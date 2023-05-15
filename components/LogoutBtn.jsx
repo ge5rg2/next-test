@@ -2,13 +2,9 @@
 import { signOut } from "next-auth/react";
 
 export default function LogoutBtn({ userName }) {
-  return (
-    <button
-      onClick={() => {
-        signOut();
-      }}
-    >
-      {userName} Log out
-    </button>
-  );
+  const handleLogout = async () => {
+    await signOut();
+    window.location.href = "/";
+  };
+  return <button onClick={handleLogout}>{userName} Log out</button>;
 }
