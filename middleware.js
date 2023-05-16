@@ -8,6 +8,7 @@ export async function middleware(request) {
   if (request.nextUrl.pathname.startsWith("/list")) {
     console.log(new Date().toLocaleString());
     console.log(request.headers.get("sec-ch-ua-platform"));
-    return NextResponse.next();
+    const res = NextResponse.next();
+    return res;
   }
 }
