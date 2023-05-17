@@ -62,4 +62,4 @@ export default async function handler(req, res) {
   }
 }
 
-// 500 에러 처리 필요
+// Need to handle 500 server error

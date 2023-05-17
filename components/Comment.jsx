@@ -25,7 +25,6 @@ export default function Comment({ parentData }) {
       })
       .catch((error) => {
         console.error(error);
-        // 실패시 실행할 코드
       });
   };
 

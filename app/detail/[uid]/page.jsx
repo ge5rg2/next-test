@@ -20,12 +20,12 @@ export default async function Detail(props) {
     return (
       <div>
         <h4>{result.title}</h4>
-        <h4>2</h4>
-        <p>1</p>
+        <h4>DES</h4>
+        <p>DES2</p>
         <Comment parentData={props} />
         <div></div>
       </div>
     );
   }
-  // 게시물 좋아요 기능 추가해보기
+  // Add the ability to like posts
 }
